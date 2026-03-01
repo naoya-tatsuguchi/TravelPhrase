@@ -18,7 +18,7 @@ export function CategorySection({ language, category, isLoggedIn, onLoginRequest
   const deleteCategory = useAppStore(s => s.deleteCategory);
   const updateCategory = useAppStore(s => s.updateCategory);
 
-  const [open,        setOpen]        = useState(true);
+  const [open,        setOpen]        = useState(false); /* 初期は閉じる：必要なカテゴリをタップして展開 */
   const [addPhrase,   setAddPhrase]   = useState(false);
   const [editPhrase,  setEditPhrase]  = useState<Phrase | null>(null);
   const [editingName, setEditingName] = useState(false);

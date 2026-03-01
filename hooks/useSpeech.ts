@@ -14,6 +14,28 @@ function hasVoiceForLang(voices: SpeechSynthesisVoice[], lang: string): boolean 
   );
 }
 
+/** ネイティブ発音に近づけるため、対象言語に最適な音声を選択 */
+function selectVoiceForLang(voices: SpeechSynthesisVoice[], lang: string): SpeechSynthesisVoice | null {
+  if (!lang || !voices.length) return null;
+  const primary = lang.split('-')[0];
+
+  // 1. 完全一致（例: en-US）
+  let best = voices.find((v) => v.lang === lang);
+  if (best) return best;
+
+  // 2. 同じ言語の地域変種（例: en-GB, en-AU）
+  const matches = voices.filter((v) => v.lang.startsWith(primary + '-'));
+  if (matches.length > 0) {
+    // local を優先（端末のロケールに近い音声）、次に default
+    best = matches.find((v) => v.localService) ?? matches.find((v) => v.default) ?? matches[0];
+    return best;
+  }
+
+  // 3. プライマリ言語のみ（例: en）
+  best = voices.find((v) => v.lang === primary);
+  return best ?? null;
+}
+
 export function useSpeech() {
   const [speaking, setSpeaking] = useState<string | null>(null);
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
@@ -62,6 +84,10 @@ export function useSpeech() {
       utter.pitch = 1;
       utter.volume = 1;
 
+      // ネイティブ発音に近づけるため、対象言語に合う音声を明示的に選択
+      const voice = selectVoiceForLang(voices, lang);
+      if (voice) utter.voice = voice;
+
       utter.onstart = () => setSpeaking(phraseId);
       utter.onend = () => {
         setSpeaking(null);
@@ -75,7 +101,7 @@ export function useSpeech() {
       utterRef.current = utter;
       window.speechSynthesis.speak(utter);
     },
-    [isSpeechSupported]
+    [isSpeechSupported, voices]
   );
 
   const stop = useCallback(() => {

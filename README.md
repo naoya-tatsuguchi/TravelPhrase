@@ -62,6 +62,11 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJxxx...
 
 - **「確認メールを送信しました」と表示された場合**  
   アカウントは正常に作成されています。メール内のリンクをクリックしてアカウントを有効化し、その後「ログイン」でログインしてください。
+- **メールのリンクをクリック後「サーバに接続できなかった」と表示される場合**  
+  Supabase の URL 設定を確認してください。  
+  **Authentication** → **URL Configuration** で以下を設定：
+  - **Site URL**: 本番のアプリURL（例: `https://travel-phrase.vercel.app`）
+  - **Redirect URLs** に以下を追加：`https://あなたのドメイン/auth/callback`（例: `https://travel-phrase.vercel.app/auth/callback`）
 - **テスト用にメール確認を無効化したい場合**  
   Supabase ダッシュボード → **Authentication** → **Providers** → **Email** を開き、**Confirm email** をオフにすると、登録後すぐにログインできます。
 

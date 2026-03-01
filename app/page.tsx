@@ -10,6 +10,7 @@ import { CategoryModal } from '@/components/category/CategoryModal';
 import { LanguageModal } from '@/components/language/LanguageModal';
 import { SearchResults } from '@/components/search/SearchResults';
 import { OfflineBanner } from '@/components/layout/OfflineBanner';
+import { VoiceHelpModal } from '@/components/layout/VoiceHelpModal';
 import { AuthModal } from '@/components/auth/AuthModal';
 
 export default function Home() {
@@ -20,6 +21,7 @@ export default function Home() {
   const [showAddLang, setShowAddLang] = useState(false);
   const [showAddCat,  setShowAddCat]  = useState(false);
   const [showAuth,    setShowAuth]    = useState(false);
+  const [showVoiceHelp, setShowVoiceHelp] = useState(false);
 
   const searchResults = useSearch(languages, searchQuery);
   const isSearching   = searchQuery.trim().length > 0;
@@ -224,8 +226,19 @@ export default function Home() {
       )}
 
       <footer className="app-footer">
+        <button
+          type="button"
+          className="footer-link footer-link-btn"
+          onClick={() => setShowVoiceHelp(true)}
+        >
+          音声について（ネイティブ発音の設定・Android）
+        </button>
         <a href="/privacy" className="footer-link">プライバシーポリシー</a>
       </footer>
+
+      {showVoiceHelp && (
+        <VoiceHelpModal onClose={() => setShowVoiceHelp(false)} />
+      )}
     </>
   );
 }

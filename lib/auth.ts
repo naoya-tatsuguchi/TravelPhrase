@@ -6,7 +6,12 @@ import type { User } from '@supabase/supabase-js';
 export async function signUp(email: string, password: string) {
   const supabase = createClient();
   if (!supabase) throw new Error('Supabase が設定されていません');
-  const { data, error } = await supabase.auth.signUp({ email, password });
+  const redirectTo = typeof window !== 'undefined' ? `${window.location.origin}/auth/callback` : undefined;
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: redirectTo ? { emailRedirectTo: redirectTo } : undefined,
+  });
   if (error) throw error;
   // メール確認が有効な場合、session は null のまま（確認リンク後にログイン可能）
   if (data.user && !data.session) {
