@@ -228,10 +228,10 @@ export default function Home() {
       <footer className="app-footer">
         <button
           type="button"
-          className="footer-link footer-link-btn"
+          className="footer-link footer-link-btn footer-link-voice"
           onClick={() => setShowVoiceHelp(true)}
         >
-          音声について（ネイティブ発音の設定・Android）
+          🔊 音声のネイティブ発音設定（Android）
         </button>
         <a href="/privacy" className="footer-link">プライバシーポリシー</a>
       </footer>
