@@ -93,6 +93,18 @@ npm start
 
 #### Vercel にデプロイする（本番公開）
 
+**GitHub 連携でデプロイする場合:**
+
+1. GitHub にリポジトリがある場合、リモートを追加してプッシュする:
+   ```bash
+   git remote add origin https://github.com/あなたのユーザー名/リポジトリ名.git
+   git branch -M main
+   git push -u origin main
+   ```
+2. Vercel が GitHub と連携されていれば、プッシュで自動デプロイされる。
+
+**Vercel CLI でデプロイする場合:**
+
 1. **初回のみ** Vercel にログイン: `npx vercel login`
 2. プロジェクト直下で実行: `npx vercel --prod`
 3. 初回はプロジェクト名・設定の質問に答える（Enter で既定値可）
