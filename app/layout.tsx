@@ -1,5 +1,4 @@
 import './globals.css';
-import Script from 'next/script';
 
 export const viewport = {
   width: 'device-width',
@@ -29,12 +28,11 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <head>
-        <Script
-          id="adsense"
+        {/* AdSense: 初期HTMLに含め、クローラーが所有権確認できるようにする */}
+        <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5047174092670639"
           crossOrigin="anonymous"
-          strategy="afterInteractive"
         />
       </head>
       <body>{children}</body>
