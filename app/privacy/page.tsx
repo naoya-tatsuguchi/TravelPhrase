@@ -59,9 +59,23 @@ export default function PrivacyPage() {
             <li>
               <strong>Anthropic Claude API</strong>：翻訳・カタカナ読み生成（AI 翻訳機能利用時のみ）
             </li>
+            <li>
+              <strong>Google AdSense</strong>：広告配信（第三者配信事業者による広告表示）
+            </li>
           </ul>
           <p>
             これらのサービスは、それぞれのプライバシーポリシーに従ってデータを処理します。
+          </p>
+        </section>
+
+        <section>
+          <h2>3.1 広告（Google AdSense）と Cookie 等の利用</h2>
+          <p>
+            本アプリは、Google が提供する広告サービス（Google AdSense）を利用して広告を表示する場合があります。
+            Google を含む第三者配信事業者は Cookie 等を使用し、ユーザーの過去のアクセス情報に基づいて広告を配信することがあります。
+          </p>
+          <p>
+            広告配信で使用される情報や設定の詳細は、Google の案内をご確認ください。
           </p>
         </section>
 
