@@ -26,6 +26,9 @@ yarn-error.log*
 # Vercel
 .vercel
 
+# Bubblewrap / Android (local)
+android-twa/
+
 # IDE
 .idea/
 .vscode/
