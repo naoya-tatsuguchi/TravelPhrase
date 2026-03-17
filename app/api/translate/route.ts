@@ -8,7 +8,7 @@ import {
 
 export async function POST(req: NextRequest) {
   try {
-    const apiKey = process.env.ANTHROPIC_API_KEY;
+    const apiKey = (process.env.ANTHROPIC_API_KEY ?? '').trim();
     if (!apiKey) {
       return NextResponse.json({ error: 'AI翻訳が未設定です（ANTHROPIC_API_KEY）' }, { status: 501 });
     }
