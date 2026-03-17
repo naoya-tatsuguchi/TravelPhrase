@@ -4,6 +4,9 @@ import { useState } from 'react';
 import { useAppStore } from '@/store/phraseStore';
 
 const PRESETS = [
+  { name: '英語',     nativeName: 'English',  bcp47: 'en-US', flag: '🇺🇸' },
+  { name: '韓国語',   nativeName: '한국어',    bcp47: 'ko-KR', flag: '🇰🇷' },
+  { name: 'タイ語',   nativeName: 'ไทย',      bcp47: 'th-TH', flag: '🇹🇭' },
   { name: 'フランス語', nativeName: 'Français',   bcp47: 'fr-FR', flag: '🇫🇷' },
   { name: 'スペイン語', nativeName: 'Español',    bcp47: 'es-ES', flag: '🇪🇸' },
   { name: 'ドイツ語',   nativeName: 'Deutsch',    bcp47: 'de-DE', flag: '🇩🇪' },
@@ -17,6 +20,7 @@ interface Props { onClose: () => void; }
 
 export function LanguageModal({ onClose }: Props) {
   const addLanguage = useAppStore(s => s.addLanguage);
+  const languages = useAppStore(s => s.languages);
   const [name,       setName]       = useState('');
   const [nativeName, setNativeName] = useState('');
   const [bcp47,      setBcp47]      = useState('');
@@ -43,11 +47,20 @@ export function LanguageModal({ onClose }: Props) {
 
         <p className="field-label">プリセット</p>
         <div className="preset-grid">
-          {PRESETS.map(p => (
-            <button key={p.bcp47} className="preset-btn" onClick={() => applyPreset(p)}>
-              {p.flag} {p.name}
-            </button>
-          ))}
+          {PRESETS.map(p => {
+            const alreadyAdded = languages.some(l => l.bcp47 === p.bcp47);
+            return (
+              <button
+                key={p.bcp47}
+                className={`preset-btn ${alreadyAdded ? 'preset-btn--disabled' : ''}`}
+                onClick={() => !alreadyAdded && applyPreset(p)}
+                disabled={alreadyAdded}
+                title={alreadyAdded ? '追加済みです' : '入力欄に反映'}
+              >
+                {p.flag} {p.name}{alreadyAdded ? '（追加済み）' : ''}
+              </button>
+            );
+          })}
         </div>
 
         <div className="field-row-2">

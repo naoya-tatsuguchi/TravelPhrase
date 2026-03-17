@@ -60,6 +60,9 @@ export const useAppStore = create<AppState>((set, get) => ({
   },
 
   addLanguage(input) {
+    // 同じBCP-47の重複追加を防ぐ（プリセットの再追加や誤操作対策）
+    const exists = get().languages.some(l => l.bcp47 === input.bcp47);
+    if (exists) return;
     const lang: Language = {
       ...input,
       id:         genId(),
