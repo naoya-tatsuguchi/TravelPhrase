@@ -36,7 +36,16 @@ export function PhraseModal({ language, category, phrase, onClose }: Props) {
           bcp47:          language.bcp47,
         }),
       });
-      if (!res.ok) throw new Error((await res.json()).error ?? 'API エラー');
+      if (!res.ok) {
+        let msg = 'AI翻訳でエラーが発生しました';
+        try {
+          const j = await res.json();
+          msg = typeof j?.error === 'string' ? j.error : msg;
+        } catch {
+          // noop
+        }
+        throw new Error(msg);
+      }
       const data = await res.json();
       setTargetText(data.targetText);
       setKatakana(data.katakana);

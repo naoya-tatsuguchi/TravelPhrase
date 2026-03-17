@@ -6,10 +6,14 @@ import {
   parseTranslationResponse,
 } from '@/lib/translationPrompt';
 
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-
 export async function POST(req: NextRequest) {
   try {
+    const apiKey = process.env.ANTHROPIC_API_KEY;
+    if (!apiKey) {
+      return NextResponse.json({ error: 'AI翻訳が未設定です（ANTHROPIC_API_KEY）' }, { status: 501 });
+    }
+    const client = new Anthropic({ apiKey });
+
     const { jaText, targetLanguage, bcp47 } = await req.json();
 
     if (!jaText || !targetLanguage || !bcp47) {
@@ -31,6 +35,14 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(parseTranslationResponse(rawText));
   } catch (err) {
     console.error('[/api/translate]', err);
+    // Anthropic SDK のエラーは status を持つことがある
+    const status = typeof err === 'object' && err !== null && 'status' in err ? (err as { status?: number }).status : undefined;
+    if (status === 401 || status === 403) {
+      return NextResponse.json(
+        { error: 'AI翻訳の認証に失敗しました。環境変数 ANTHROPIC_API_KEY を確認してください。' },
+        { status }
+      );
+    }
     return NextResponse.json(
       { error: err instanceof Error ? err.message : '不明なエラー' },
       { status: 500 }
