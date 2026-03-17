@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import type { Phrase, Category, Language } from '@/types/phrase';
 import { useAppStore } from '@/store/phraseStore';
-import { useSpeech } from '@/hooks/useSpeech';
+import { useVoicePlayback } from '@/hooks/useVoicePlayback';
 
 interface Props {
   phrase:   Phrase;
@@ -16,16 +16,15 @@ interface Props {
 
 export function PhraseCard({ phrase, category, language, isLoggedIn, onEdit, onLoginRequest }: Props) {
   const deletePhrase = useAppStore(s => s.deletePhrase);
-  const { speak, stop, speaking, canSpeak, isSpeechSupported, speakError, clearSpeakError } = useSpeech();
+  const { play, stop, playing, canPlay, playError, clearPlayError } = useVoicePlayback();
   const [showNotes, setShowNotes] = useState(false);
-  const isSpeaking = speaking === phrase.id;
-  const langSupported = canSpeak(language.bcp47);
-  const playbackFailed = speakError === phrase.id;
+  const isSpeaking = playing === phrase.id;
+  const playbackFailed = playError === phrase.id;
 
   const handleSpeak = () => {
     if (isSpeaking) { stop(); return; }
-    clearSpeakError?.();
-    speak(phrase.targetText, language.bcp47, phrase.id);
+    clearPlayError?.();
+    play(phrase.targetText, language.bcp47, phrase.id);
   };
 
   const handleDelete = () => {
@@ -62,15 +61,10 @@ export function PhraseCard({ phrase, category, language, isLoggedIn, onEdit, onL
 
       {/* Actions */}
       <div className="phrase-actions">
-        {!isSpeechSupported ? (
+        {!canPlay ? (
           <span className="speech-unavailable" title="音声再生はお使いのブラウザに対応していません">
             <button className="btn-speak btn-speak--disabled" disabled aria-label="音声再生非対応">▶</button>
             <span className="speech-unavailable-msg">非対応</span>
-          </span>
-        ) : !langSupported ? (
-          <span className="speech-unavailable" title={`${language.name}はお使いの環境で音声再生に対応していません`}>
-            <button className="btn-speak btn-speak--disabled" disabled aria-label={`${language.name}は音声再生非対応`}>▶</button>
-            <span className="speech-unavailable-msg">{language.name}非対応</span>
           </span>
         ) : playbackFailed ? (
           <span className="speech-unavailable" title={`${language.name}の音声再生に失敗しました`}>
