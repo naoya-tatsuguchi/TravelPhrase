@@ -131,7 +131,8 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  white-space: nowrap;
+  white-space: normal;
+  line-height: 1.25;
 }
 
 .app-title-icon { font-size: 26px; filter: none; -webkit-text-fill-color: initial; }
@@ -1323,7 +1324,7 @@ body {
   position: fixed;
   inset: 0;
   z-index: 220;
-  background: rgba(2, 6, 23, 0.88);
+  background: rgba(15, 23, 42, 0.45);
   backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
@@ -1333,25 +1334,25 @@ body {
 
 .phrase-zoom-modal {
   width: min(720px, 96vw);
-  background: #020617;
-  border: 2px solid #38bdf8;
+  background: #ffffff;
+  border: 2px solid #0f172a;
   border-radius: 18px;
   padding: 28px 24px 24px;
-  box-shadow: 0 20px 50px rgba(2, 132, 199, 0.35);
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.3);
   text-align: center;
 }
 
 .phrase-zoom-lang {
   font-size: 17px;
   font-weight: 700;
-  color: #7dd3fc;
+  color: #334155;
   margin-bottom: 10px;
 }
 
 .phrase-zoom-katakana {
   font-size: clamp(28px, 4vw, 38px);
   font-weight: 700;
-  color: #fcd34d;
+  color: #1e293b;
   margin-bottom: 12px;
   line-height: 1.35;
   letter-spacing: 0.02em;
@@ -1361,16 +1362,15 @@ body {
   font-size: clamp(48px, 7.5vw, 84px);
   font-weight: 800;
   line-height: 1.1;
-  color: #ffffff;
+  color: #020617;
   margin-bottom: 14px;
   word-break: break-word;
   overflow-wrap: anywhere;
-  text-shadow: 0 0 16px rgba(56, 189, 248, 0.25);
 }
 
 .phrase-zoom-ja {
   font-size: clamp(28px, 4.6vw, 44px);
-  color: #e2e8f0;
+  color: #111827;
   margin-bottom: 24px;
   line-height: 1.35;
 }

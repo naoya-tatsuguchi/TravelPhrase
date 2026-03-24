@@ -52,7 +52,7 @@ export default function Home() {
         <div className="header-inner">
           <h1 className="app-title">
             <span className="app-title-icon">🌏</span>
-            TravelPhrase
+            TravelPhrase — 自分専用の旅行フレーズ帳
           </h1>
 
           <div className="search-wrap">

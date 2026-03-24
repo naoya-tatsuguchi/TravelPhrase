@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'プライバシーポリシー | TravelPhrase',
-  description: 'TravelPhrase のプライバシーポリシー',
+  title: 'プライバシーポリシー | TravelPhrase — 自分専用の旅行フレーズ帳',
+  description: 'TravelPhrase — 自分専用の旅行フレーズ帳 のプライバシーポリシー',
 };
 
 export default function PrivacyPage() {
@@ -10,7 +10,7 @@ export default function PrivacyPage() {
     <div className="privacy-page">
       <header className="privacy-header">
         <Link href="/" className="privacy-back">
-          ← TravelPhrase に戻る
+          ← TravelPhrase — 自分専用の旅行フレーズ帳 に戻る
         </Link>
       </header>
 
@@ -21,7 +21,7 @@ export default function PrivacyPage() {
         <section>
           <h2>1. はじめに</h2>
           <p>
-            TravelPhrase（以下「本アプリ」）は、ユーザーのプライバシーを尊重し、個人情報の適切な取り扱いを行います。
+            TravelPhrase — 自分専用の旅行フレーズ帳（以下「本アプリ」）は、ユーザーのプライバシーを尊重し、個人情報の適切な取り扱いを行います。
             本プライバシーポリシーは、本アプリが収集・利用する情報と、その目的について説明します。
           </p>
         </section>

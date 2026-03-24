@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type MouseEvent } from 'react';
+import { useState, type MouseEvent, type TouchEvent, type PointerEvent } from 'react';
 import type { Phrase, Category, Language } from '@/types/phrase';
 import { useAppStore } from '@/store/phraseStore';
 import { useVoicePlayback } from '@/hooks/useVoicePlayback';
@@ -35,10 +35,25 @@ export function PhraseCard({ phrase, category, language, isLoggedIn, onEdit, onL
     }
   };
 
+  const shouldIgnoreZoomOpen = (target: EventTarget | null) => {
+    if (!(target instanceof HTMLElement)) return true;
+    return !!target.closest('button,a,input,textarea,label');
+  };
+
   const handleOpenZoom = (e: MouseEvent<HTMLDivElement>) => {
-    const target = e.target as HTMLElement;
-    if (target.closest('button,a,input,textarea,label')) return;
+    if (shouldIgnoreZoomOpen(e.target)) return;
     setShowZoom(true);
+  };
+
+  const handleTouchOpenZoom = (e: TouchEvent<HTMLDivElement>) => {
+    if (shouldIgnoreZoomOpen(e.target)) return;
+    setShowZoom(true);
+  };
+
+  const handlePointerOpenZoom = (e: PointerEvent<HTMLDivElement>) => {
+    // Android WebView/TWA では click より pointer の方が安定するケースがある
+    if (shouldIgnoreZoomOpen(e.target)) return;
+    if (e.pointerType === 'touch') setShowZoom(true);
   };
 
   return (
@@ -46,6 +61,8 @@ export function PhraseCard({ phrase, category, language, isLoggedIn, onEdit, onL
     <div
       className="phrase-card group"
       onClick={handleOpenZoom}
+      onTouchEnd={handleTouchOpenZoom}
+      onPointerUp={handlePointerOpenZoom}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
