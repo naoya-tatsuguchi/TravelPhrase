@@ -12,6 +12,7 @@ import { SearchResults } from '@/components/search/SearchResults';
 import { OfflineBanner } from '@/components/layout/OfflineBanner';
 import { VoiceHelpModal } from '@/components/layout/VoiceHelpModal';
 import { AuthModal } from '@/components/auth/AuthModal';
+import { AdBanner } from '@/components/ads/AdBanner';
 
 export default function Home() {
   const { user, loading: authLoading, signIn, signUp, signOut } = useAuth();
@@ -26,6 +27,7 @@ export default function Home() {
   const searchResults = useSearch(languages, searchQuery);
   const isSearching   = searchQuery.trim().length > 0;
   const activeLang    = languages.find(l => l.id === activeLanguageId);
+  const adSlot = process.env.NEXT_PUBLIC_ADSENSE_SLOT_MAIN ?? '';
 
   useEffect(() => {
     if (authLoading) return;
@@ -52,7 +54,7 @@ export default function Home() {
         <div className="header-inner">
           <h1 className="app-title">
             <span className="app-title-icon">🌏</span>
-            TravelPhrase — 自分専用の旅行フレーズ帳
+            TravelPhrase — 自分で作る旅行単語帳
           </h1>
 
           <div className="search-wrap">
@@ -210,6 +212,12 @@ export default function Home() {
           </div>
         )}
       </main>
+
+      {adSlot && (
+        <section className="ad-section" aria-label="広告">
+          <AdBanner slot={adSlot} className="ad-banner" />
+        </section>
+      )}
 
       {/* ─── Modals ─── */}
       {showAuth && (

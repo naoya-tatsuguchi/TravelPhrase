@@ -6,14 +6,14 @@ export const viewport = {
 };
 
 export const metadata = {
-  title: 'TravelPhrase — 自分専用の旅行フレーズ帳',
+  title: 'TravelPhrase — 自分で作る旅行単語帳',
   description: 'オフライン対応の多言語旅行フレーズアプリ。AI翻訳・音声再生付き。',
   manifest: '/manifest.json',
   themeColor: '#0ea5e9',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
-    title: 'TravelPhrase — 自分専用の旅行フレーズ帳',
+    title: 'TravelPhrase — 自分で作る旅行単語帳',
   },
   icons: {
     apple: '/icon-192x192.png',

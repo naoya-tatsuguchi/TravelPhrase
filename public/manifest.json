@@ -1,6 +1,6 @@
 {
-  "name": "TravelPhrase — 自分専用の旅行フレーズ帳",
-  "short_name": "TravelPhrase — 自分専用の旅行フレーズ帳",
+  "name": "TravelPhrase — 自分で作る旅行単語帳",
+  "short_name": "TravelPhrase — 自分で作る旅行単語帳",
   "description": "オフライン対応の多言語旅行フレーズアプリ",
   "start_url": "/",
   "display": "standalone",

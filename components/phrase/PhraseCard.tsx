@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type MouseEvent, type TouchEvent, type PointerEvent } from 'react';
+import { useRef, useState, type MouseEvent, type TouchEvent } from 'react';
 import type { Phrase, Category, Language } from '@/types/phrase';
 import { useAppStore } from '@/store/phraseStore';
 import { useVoicePlayback } from '@/hooks/useVoicePlayback';
@@ -19,6 +19,8 @@ export function PhraseCard({ phrase, category, language, isLoggedIn, onEdit, onL
   const { play, stop, playing, canPlay, playError, clearPlayError } = useVoicePlayback();
   const [showNotes, setShowNotes] = useState(false);
   const [showZoom, setShowZoom] = useState(false);
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
+  const isTouchScrollingRef = useRef(false);
   const isSpeaking = playing === phrase.id;
   const playbackFailed = playError === phrase.id;
 
@@ -41,19 +43,46 @@ export function PhraseCard({ phrase, category, language, isLoggedIn, onEdit, onL
   };
 
   const handleOpenZoom = (e: MouseEvent<HTMLDivElement>) => {
+    // touch 由来の click と二重発火しないよう、click はマウス操作のみ対象
+    if ('detail' in e.nativeEvent && e.nativeEvent.detail === 0) return;
     if (shouldIgnoreZoomOpen(e.target)) return;
     setShowZoom(true);
   };
 
-  const handleTouchOpenZoom = (e: TouchEvent<HTMLDivElement>) => {
+  const handleTouchStart = (e: TouchEvent<HTMLDivElement>) => {
     if (shouldIgnoreZoomOpen(e.target)) return;
-    setShowZoom(true);
+    const t = e.changedTouches[0];
+    if (!t) return;
+    touchStartRef.current = { x: t.clientX, y: t.clientY };
+    isTouchScrollingRef.current = false;
   };
 
-  const handlePointerOpenZoom = (e: PointerEvent<HTMLDivElement>) => {
-    // Android WebView/TWA では click より pointer の方が安定するケースがある
+  const handleTouchMove = () => {
+    isTouchScrollingRef.current = true;
+  };
+
+  const handleTouchEnd = (e: TouchEvent<HTMLDivElement>) => {
     if (shouldIgnoreZoomOpen(e.target)) return;
-    if (e.pointerType === 'touch') setShowZoom(true);
+    const start = touchStartRef.current;
+    const t = e.changedTouches[0];
+    if (!start || !t) return;
+
+    const dx = Math.abs(t.clientX - start.x);
+    const dy = Math.abs(t.clientY - start.y);
+    const TAP_MOVE_THRESHOLD = 10;
+
+    // 指の移動が小さい時だけ「タップ」とみなす（スクロール時は開かない）
+    const isTap = !isTouchScrollingRef.current || (dx <= TAP_MOVE_THRESHOLD && dy <= TAP_MOVE_THRESHOLD);
+    if (isTap && dx <= TAP_MOVE_THRESHOLD && dy <= TAP_MOVE_THRESHOLD) {
+      setShowZoom(true);
+    }
+    touchStartRef.current = null;
+    isTouchScrollingRef.current = false;
+  };
+
+  const handleTouchCancel = () => {
+    touchStartRef.current = null;
+    isTouchScrollingRef.current = false;
   };
 
   return (
@@ -61,8 +90,10 @@ export function PhraseCard({ phrase, category, language, isLoggedIn, onEdit, onL
     <div
       className="phrase-card group"
       onClick={handleOpenZoom}
-      onTouchEnd={handleTouchOpenZoom}
-      onPointerUp={handlePointerOpenZoom}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      onTouchCancel={handleTouchCancel}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();

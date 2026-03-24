@@ -131,8 +131,8 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  white-space: normal;
-  line-height: 1.25;
+  white-space: nowrap;
+  line-height: 1.1;
 }
 
 .app-title-icon { font-size: 26px; filter: none; -webkit-text-fill-color: initial; }
@@ -1227,6 +1227,23 @@ body {
   justify-content: center;
   align-items: center;
   gap: 8px 16px;
+}
+
+/* ─────────────────────────────────────────
+   Ads
+───────────────────────────────────────── */
+.ad-section {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px 12px;
+}
+
+.ad-banner {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px;
+  min-height: 110px;
 }
 
 .footer-link {
