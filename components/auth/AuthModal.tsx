@@ -17,6 +17,15 @@ export function AuthModal({ mode, onClose, onSignIn, onSignUp }: Props) {
   const [loading, setLoading] = useState(false);
   const [isSignUp, setIsSignUp] = useState(mode === 'signup');
 
+  const toJapaneseAuthError = (msg: string): string => {
+    const normalized = msg.toLowerCase();
+    if (normalized.includes('invalid login credentials')) return 'メールアドレスまたはパスワードが正しくありません。';
+    if (normalized.includes('email not confirmed')) return 'メール確認が完了していません。確認メールのリンクを開いてください。';
+    if (normalized.includes('password should be at least')) return 'パスワードは6文字以上で入力してください。';
+    if (normalized.includes('too many requests')) return '試行回数が多すぎます。しばらく待ってから再試行してください。';
+    return msg;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -38,7 +47,7 @@ export function AuthModal({ mode, onClose, onSignIn, onSignUp }: Props) {
       } else if (msg.startsWith('CONFIRM_EMAIL: ')) {
         setSuccessMsg(msg.replace('CONFIRM_EMAIL: ', ''));
       } else {
-        setError(msg);
+        setError(toJapaneseAuthError(msg));
       }
     } finally {
       setLoading(false);
