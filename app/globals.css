@@ -1284,6 +1284,9 @@ body {
   max-height: 90dvh;
   display: flex;
   flex-direction: column;
+  /* 親 .modal のスクロールを無効化して、本文コンテナだけをスクロールさせる */
+  overflow: hidden;
+  min-height: 0;
 }
 
 .voice-help-scroll {
@@ -1293,6 +1296,7 @@ body {
   -webkit-overflow-scrolling: touch;
   touch-action: pan-y;
   padding-right: 2px; /* scrollbar gap */
+  min-height: 0; /* flex内でスクロールさせる必須条件 */
 }
 
 .voice-help-intro {
