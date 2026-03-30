@@ -13,6 +13,7 @@ import { SearchResults } from '@/components/search/SearchResults';
 import { OfflineBanner } from '@/components/layout/OfflineBanner';
 import { VoiceHelpModal } from '@/components/layout/VoiceHelpModal';
 import { AuthModal } from '@/components/auth/AuthModal';
+import { AdBanner } from '@/components/ads/AdBanner';
 
 export default function Home() {
   const { user, loading: authLoading, signIn, signUp, signOut } = useAuth();
@@ -27,6 +28,7 @@ export default function Home() {
   const searchResults = useSearch(languages, searchQuery);
   const isSearching   = searchQuery.trim().length > 0;
   const activeLang    = languages.find(l => l.id === activeLanguageId);
+  const adSlot = process.env.NEXT_PUBLIC_ADSENSE_SLOT_MAIN ?? '';
 
   useEffect(() => {
     if (authLoading) return;
@@ -152,23 +154,6 @@ export default function Home() {
               </div>
             )}
 
-            <section className="home-intro" aria-label="アプリの説明">
-              <h2 className="home-intro-title">旅行先で「見せて伝わる」自分の単語帳</h2>
-              <p className="home-intro-desc">
-                旅行でよく使うフレーズを、言語×カテゴリで整理。必要なときに検索して、相手に画面を見せてそのまま伝えられます。
-              </p>
-              <ul className="home-intro-list">
-                <li>フレーズをタップして拡大表示（見せる用途に最適）</li>
-                <li>AI翻訳でフレーズ作成を補助（必要なときだけ）</li>
-                <li>オフラインでも使える場合があります</li>
-              </ul>
-              <div className="home-intro-actions">
-                <Link href="/guide" className="home-intro-link">
-                  使い方を見る
-                </Link>
-              </div>
-            </section>
-
             <div className="lang-hero">
               <span className="lang-hero-flag">{activeLang.flag}</span>
               <div>
@@ -204,6 +189,29 @@ export default function Home() {
             >
               ＋ カテゴリーを追加
             </button>
+
+            <section className="home-intro home-intro--below" aria-label="アプリの説明">
+              <h2 className="home-intro-title">旅行先で「見せて伝わる」自分の単語帳</h2>
+              <p className="home-intro-desc">
+                旅行でよく使うフレーズを、言語×カテゴリで整理。必要なときに検索して、相手に画面を見せてそのまま伝えられます。
+              </p>
+              <ul className="home-intro-list">
+                <li>フレーズをタップして拡大表示（見せる用途に最適）</li>
+                <li>AI翻訳でフレーズ作成を補助（必要なときだけ）</li>
+                <li>オフラインでも使える場合があります</li>
+              </ul>
+              <div className="home-intro-actions">
+                <Link href="/guide" className="home-intro-link">
+                  使い方を見る
+                </Link>
+              </div>
+            </section>
+
+            {adSlot && (
+              <section className="ad-section" aria-label="広告">
+                <AdBanner slot={adSlot} className="ad-banner" />
+              </section>
+            )}
           </>
         ) : (
           <div className="empty-state">

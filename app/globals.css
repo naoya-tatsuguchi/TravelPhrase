@@ -815,9 +815,9 @@ body {
   align-items: end;
   padding: 0 max(env(safe-area-inset-right), 0px) max(env(safe-area-inset-bottom), 0px) max(env(safe-area-inset-left), 0px);
   animation: fade-in 0.2s ease;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  -webkit-overflow-scrolling: touch;
+  /* Prevent parent scroll stealing; modal handles scrolling */
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 
 @media (min-width: 600px) {
@@ -1285,6 +1285,7 @@ body {
   overflow-y: auto;
   overscroll-behavior: contain;
   touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
 }
 
 .voice-help-intro {
