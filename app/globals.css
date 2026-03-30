@@ -1282,10 +1282,17 @@ body {
 ───────────────────────────────────────── */
 .voice-help-modal {
   max-height: 90dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.voice-help-scroll {
+  flex: 1;
   overflow-y: auto;
   overscroll-behavior: contain;
-  touch-action: pan-y;
   -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  padding-right: 2px; /* scrollbar gap */
 }
 
 .voice-help-intro {
