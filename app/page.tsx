@@ -12,7 +12,6 @@ import { SearchResults } from '@/components/search/SearchResults';
 import { OfflineBanner } from '@/components/layout/OfflineBanner';
 import { VoiceHelpModal } from '@/components/layout/VoiceHelpModal';
 import { AuthModal } from '@/components/auth/AuthModal';
-import { AdBanner } from '@/components/ads/AdBanner';
 
 export default function Home() {
   const { user, loading: authLoading, signIn, signUp, signOut } = useAuth();
@@ -27,7 +26,6 @@ export default function Home() {
   const searchResults = useSearch(languages, searchQuery);
   const isSearching   = searchQuery.trim().length > 0;
   const activeLang    = languages.find(l => l.id === activeLanguageId);
-  const adSlot = process.env.NEXT_PUBLIC_ADSENSE_SLOT_MAIN ?? '';
 
   useEffect(() => {
     if (authLoading) return;
@@ -213,12 +211,6 @@ export default function Home() {
         )}
       </main>
 
-      {adSlot && (
-        <section className="ad-section" aria-label="広告">
-          <AdBanner slot={adSlot} className="ad-banner" />
-        </section>
-      )}
-
       {/* ─── Modals ─── */}
       {showAuth && (
         <AuthModal
@@ -241,6 +233,9 @@ export default function Home() {
         >
           🔊 音声のネイティブ発音設定（Android）
         </button>
+        <a href="/guide" className="footer-link">使い方</a>
+        <a href="/faq" className="footer-link">よくある質問</a>
+        <a href="/about" className="footer-link">運営</a>
         <a href="/privacy" className="footer-link">プライバシーポリシー</a>
       </footer>
 
