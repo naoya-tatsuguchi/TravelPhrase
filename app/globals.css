@@ -841,6 +841,7 @@ body {
   overflow-y: auto;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
   animation: slide-up 0.25s ease;
   box-shadow: 0 -8px 32px rgba(14, 165, 233, 0.15);
   flex-shrink: 0;
@@ -1282,6 +1283,8 @@ body {
 .voice-help-modal {
   max-height: 90dvh;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
 }
 
 .voice-help-intro {
@@ -1334,6 +1337,69 @@ body {
 .voice-help-others {
   padding-top: 12px;
   border-top: 1px solid var(--border);
+}
+
+/* ─────────────────────────────────────────
+   Home intro (content block)
+───────────────────────────────────────── */
+.home-intro {
+  background: rgba(255, 255, 255, 0.92);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 18px 18px 16px;
+  margin-bottom: 18px;
+  box-shadow: var(--shadow-sm);
+}
+
+.home-intro-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.home-intro-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+
+.home-intro-list {
+  margin-left: 1.2em;
+  margin-bottom: 12px;
+}
+
+.home-intro-list li {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 6px;
+}
+
+.home-intro-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.home-intro-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  background: linear-gradient(135deg, var(--accent), var(--coral));
+  color: #fff;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  box-shadow: 0 4px 16px rgba(14, 165, 233, 0.25);
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.home-intro-link:hover {
+  transform: translateY(-1px);
+  opacity: 0.95;
 }
 
 /* ─────────────────────────────────────────

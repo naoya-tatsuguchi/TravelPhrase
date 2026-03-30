@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useAppStore } from '@/store/phraseStore';
 import { loadStore } from '@/lib/db';
@@ -150,6 +151,24 @@ export default function Home() {
                 </button>
               </div>
             )}
+
+            <section className="home-intro" aria-label="アプリの説明">
+              <h2 className="home-intro-title">旅行先で「見せて伝わる」自分の単語帳</h2>
+              <p className="home-intro-desc">
+                旅行でよく使うフレーズを、言語×カテゴリで整理。必要なときに検索して、相手に画面を見せてそのまま伝えられます。
+              </p>
+              <ul className="home-intro-list">
+                <li>フレーズをタップして拡大表示（見せる用途に最適）</li>
+                <li>AI翻訳でフレーズ作成を補助（必要なときだけ）</li>
+                <li>オフラインでも使える場合があります</li>
+              </ul>
+              <div className="home-intro-actions">
+                <Link href="/guide" className="home-intro-link">
+                  使い方を見る
+                </Link>
+              </div>
+            </section>
+
             <div className="lang-hero">
               <span className="lang-hero-flag">{activeLang.flag}</span>
               <div>
