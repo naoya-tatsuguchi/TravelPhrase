@@ -1,6 +1,7 @@
 'use client';
 
-import { useRef, useState, type MouseEvent, type TouchEvent } from 'react';
+import { useEffect, useRef, useState, type MouseEvent, type TouchEvent } from 'react';
+import { createPortal } from 'react-dom';
 import type { Phrase, Category, Language } from '@/types/phrase';
 import { useAppStore } from '@/store/phraseStore';
 import { useVoicePlayback } from '@/hooks/useVoicePlayback';
@@ -23,6 +24,15 @@ export function PhraseCard({ phrase, category, language, isLoggedIn, onEdit, onL
   const isTouchScrollingRef = useRef(false);
   const isSpeaking = playing === phrase.id;
   const playbackFailed = playError === phrase.id;
+
+  useEffect(() => {
+    if (!showZoom) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setShowZoom(false);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [showZoom]);
 
   const handleSpeak = () => {
     if (isSpeaking) { stop(); return; }
@@ -167,7 +177,7 @@ export function PhraseCard({ phrase, category, language, isLoggedIn, onEdit, onL
         )}
       </div>
     </div>
-    {showZoom && (
+    {showZoom && typeof document !== 'undefined' && createPortal(
       <div className="phrase-zoom-overlay" onClick={() => setShowZoom(false)}>
         <div className="phrase-zoom-modal" onClick={(e) => e.stopPropagation()}>
           <p className="phrase-zoom-lang">{language.flag} {language.name}</p>
@@ -176,7 +186,8 @@ export function PhraseCard({ phrase, category, language, isLoggedIn, onEdit, onL
           <p className="phrase-zoom-ja">{phrase.jaText}</p>
           <button className="phrase-zoom-close-btn" onClick={() => setShowZoom(false)}>閉じる</button>
         </div>
-      </div>
+      </div>,
+      document.body
     )}
     </>
   );
