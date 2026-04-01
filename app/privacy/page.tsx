@@ -16,7 +16,7 @@ export default function PrivacyPage() {
 
       <main className="privacy-main">
         <h1>プライバシーポリシー</h1>
-        <p className="privacy-updated">最終更新日: 2025年2月</p>
+        <p className="privacy-updated">最終更新日: 2026年4月</p>
 
         <section>
           <h2>1. はじめに</h2>
@@ -60,6 +60,9 @@ export default function PrivacyPage() {
               <strong>Anthropic Claude API</strong>：翻訳・カタカナ読み生成（AI 翻訳機能利用時のみ）
             </li>
             <li>
+              <strong>Google Cloud Text-to-Speech API</strong>：音声合成（ユーザーがフレーズの音声再生を行う際、該当するフレーズのテキストが本アプリのサーバー経由で Google に送信され、読み上げ用の音声データが生成される場合があります。端末のブラウザ機能のみで合成する場合は送信されません）
+            </li>
+            <li>
               <strong>Google AdSense</strong>：広告配信（第三者配信事業者による広告表示）
             </li>
           </ul>
@@ -85,6 +88,7 @@ export default function PrivacyPage() {
             <li>アカウント認証とセッション管理</li>
             <li>ユーザーが作成したフレーズの保存・同期</li>
             <li>翻訳とカタカナ読みの生成（ユーザーが AI 翻訳を利用した場合）</li>
+            <li>フレーズの音声読み上げ（クラウド音声合成を利用する場合）</li>
             <li>アプリの動作・機能の提供</li>
           </ul>
         </section>
