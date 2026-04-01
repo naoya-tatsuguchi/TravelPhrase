@@ -13,12 +13,13 @@ interface Props {
   isLoggedIn: boolean;
   onEdit?:  () => void;
   onLoginRequest?: () => void;
+  defaultShowNotes?: boolean;
 }
 
-export function PhraseCard({ phrase, category, language, isLoggedIn, onEdit, onLoginRequest }: Props) {
+export function PhraseCard({ phrase, category, language, isLoggedIn, onEdit, onLoginRequest, defaultShowNotes }: Props) {
   const deletePhrase = useAppStore(s => s.deletePhrase);
   const { play, stop, playing, canPlay, playError, clearPlayError } = useVoicePlayback();
-  const [showNotes, setShowNotes] = useState(false);
+  const [showNotes, setShowNotes] = useState(!!defaultShowNotes && !!phrase.notes);
   const [showZoom, setShowZoom] = useState(false);
   const touchStartRef = useRef<{ x: number; y: number } | null>(null);
   const isTouchScrollingRef = useRef(false);

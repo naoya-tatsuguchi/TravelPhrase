@@ -21,9 +21,9 @@ export const INITIAL_LANGUAGES: Language[] = [
         createdAt: now,
         updatedAt: now,
         phrases: [
-          { id: id('en-p',1), jaText: 'こんにちは', targetText: 'Hello',           katakana: 'ハ・ロー',                    notes: '最も一般的な挨拶。',           createdAt: now, updatedAt: now },
-          { id: id('en-p',2), jaText: 'ありがとう', targetText: 'Thank you',        katakana: 'サン・キュー',                 notes: 'カジュアル〜フォーマルまで使える。', createdAt: now, updatedAt: now },
-          { id: id('en-p',3), jaText: 'すみません', targetText: 'Excuse me',        katakana: 'エク・スキュー・ズ・ミー',       notes: '人に話しかける時や道を開けてもらう時に使う。', createdAt: now, updatedAt: now },
+          { id: id('en-p',1), jaText: 'すみません、道に迷いました', targetText: 'Excuse me, I\'m lost.', katakana: 'エクスキューズ・ミー、アイム・ロスト', notes: '道を尋ねる前の一言。', createdAt: now, updatedAt: now },
+          { id: id('en-p',2), jaText: '〜へ行きたいです', targetText: 'I\'d like to go to ...', katakana: 'アィド・ライク・トゥ・ゴー・トゥ…', notes: '行き先を「…」に入れて使う。', createdAt: now, updatedAt: now },
+          { id: id('en-p',3), jaText: 'これをください', targetText: 'I\'ll take this.', katakana: 'アイル・テイク・ディス', notes: 'お店で指差ししながら使える。', createdAt: now, updatedAt: now },
         ],
       },
       {
@@ -33,9 +33,9 @@ export const INITIAL_LANGUAGES: Language[] = [
         createdAt: now,
         updatedAt: now,
         phrases: [
-          { id: id('en-p',5), jaText: 'いくらですか',     targetText: 'How much is this?',    katakana: 'ハウ・マッチ・イズ・ディス',   notes: '商品を指差しながら使う。',                          createdAt: now, updatedAt: now },
-          { id: id('en-p',7), jaText: 'これをください',    targetText: 'I\'ll take this',       katakana: 'アイル・テイク・ディス',       notes: '購入を決めた時。',                                 createdAt: now, updatedAt: now },
-          { id: id('en-p',6), jaText: 'カードは使えますか', targetText: 'Do you accept cards?',  katakana: 'ドゥユー・アクセプト・カーズ',  notes: 'クレジットカード払い可否の確認。',                     createdAt: now, updatedAt: now },
+          { id: id('en-p',5), jaText: 'いくらですか？', targetText: 'How much is this?', katakana: 'ハウ・マッチ・イズ・ディス', notes: '商品を指差しながら聞く。', createdAt: now, updatedAt: now },
+          { id: id('en-p',7), jaText: 'カードは使えますか？', targetText: 'Do you accept cards?', katakana: 'ドゥ・ユー・アクセプト・カーズ', notes: 'カード払い可否の確認。', createdAt: now, updatedAt: now },
+          { id: id('en-p',6), jaText: 'レシートをください', targetText: 'Can I get a receipt?', katakana: 'キャン・アイ・ゲット・ア・レシート', notes: '経費や返品のために。', createdAt: now, updatedAt: now },
         ],
       },
       {
@@ -67,9 +67,9 @@ export const INITIAL_LANGUAGES: Language[] = [
         createdAt: now,
         updatedAt: now,
         phrases: [
-          { id: id('ko-p',1), jaText: 'こんにちは',    targetText: '안녕하세요',      katakana: 'アン・ニョン・ハ・セヨ',  notes: '丁寧な挨拶。朝昼夜共通で使える。',        createdAt: now, updatedAt: now },
-          { id: id('ko-p',2), jaText: 'ありがとう',    targetText: '감사합니다',      katakana: 'カム・サ・ハム・ニダ',   notes: '最も丁寧なお礼の表現。',                  createdAt: now, updatedAt: now },
-          { id: id('ko-p',3), jaText: 'すみません',    targetText: '실례합니다',      katakana: 'シル・レ・ハム・ニダ',   notes: '人に話しかける時の丁寧表現。',             createdAt: now, updatedAt: now },
+          { id: id('ko-p',1), jaText: 'すみません（呼びかけ）', targetText: '저기요', katakana: 'チョギヨ', notes: '店員さんや人を呼び止める時に便利。', createdAt: now, updatedAt: now },
+          { id: id('ko-p',2), jaText: 'これをください', targetText: '이것 주세요', katakana: 'イゴッ・チュセヨ', notes: '指差ししながら使える万能表現。', createdAt: now, updatedAt: now },
+          { id: id('ko-p',3), jaText: '英語は話せますか？', targetText: '영어 할 수 있어요?', katakana: 'ヨンオ・ハル・ス・イッソヨ', notes: '会話が難しい時の確認。', createdAt: now, updatedAt: now },
         ],
       },
       {
@@ -81,7 +81,7 @@ export const INITIAL_LANGUAGES: Language[] = [
         phrases: [
           { id: id('ko-p',5), jaText: 'いくらですか',     targetText: '얼마예요?',       katakana: 'オル・マ・エ・ヨ',         notes: 'カジュアルな値段確認。',              createdAt: now, updatedAt: now },
           { id: id('ko-p',6), jaText: 'これをください',    targetText: '이것 주세요',     katakana: 'イ・ゴッ・チュ・セヨ',     notes: '指差して注文や購入に使える万能表現。',  createdAt: now, updatedAt: now },
-          { id: id('ko-p',7), jaText: '値引きできますか', targetText: '깎아 주세요',     katakana: 'ッカッカ・チュ・セヨ',     notes: '市場や交渉可能な店での値引き依頼。',   createdAt: now, updatedAt: now },
+          { id: id('ko-p',7), jaText: 'レシートください', targetText: '영수증 주세요',     katakana: 'ヨンスジュン・チュセヨ',     notes: '領収書（レシート）をお願いする。',   createdAt: now, updatedAt: now },
         ],
       },
       {

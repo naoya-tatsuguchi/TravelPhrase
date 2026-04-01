@@ -12,13 +12,15 @@ interface Props {
   category: Category;
   isLoggedIn: boolean;
   onLoginRequest: () => void;
+  defaultOpen?: boolean;
+  defaultExpandNotes?: boolean;
 }
 
-export function CategorySection({ language, category, isLoggedIn, onLoginRequest }: Props) {
+export function CategorySection({ language, category, isLoggedIn, onLoginRequest, defaultOpen, defaultExpandNotes }: Props) {
   const deleteCategory = useAppStore(s => s.deleteCategory);
   const updateCategory = useAppStore(s => s.updateCategory);
 
-  const [open,        setOpen]        = useState(false); /* 初期は閉じる：必要なカテゴリをタップして展開 */
+  const [open,        setOpen]        = useState(!!defaultOpen); /* 初期は閉じる：必要なカテゴリをタップして展開 */
   const [addPhrase,   setAddPhrase]   = useState(false);
   const [editPhrase,  setEditPhrase]  = useState<Phrase | null>(null);
   const [editingName, setEditingName] = useState(false);
@@ -99,6 +101,7 @@ export function CategorySection({ language, category, isLoggedIn, onLoginRequest
                 isLoggedIn={isLoggedIn}
                 onEdit={isLoggedIn ? () => handleEditPhrase(phrase) : undefined}
                 onLoginRequest={onLoginRequest}
+                defaultShowNotes={!!defaultExpandNotes}
               />
             ))}
           </div>

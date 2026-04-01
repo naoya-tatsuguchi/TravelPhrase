@@ -13,7 +13,6 @@ import { SearchResults } from '@/components/search/SearchResults';
 import { OfflineBanner } from '@/components/layout/OfflineBanner';
 import { VoiceHelpModal } from '@/components/layout/VoiceHelpModal';
 import { AuthModal } from '@/components/auth/AuthModal';
-import { AdBanner } from '@/components/ads/AdBanner';
 
 export default function Home() {
   const { user, loading: authLoading, signIn, signUp, signOut } = useAuth();
@@ -28,7 +27,7 @@ export default function Home() {
   const searchResults = useSearch(languages, searchQuery);
   const isSearching   = searchQuery.trim().length > 0;
   const activeLang    = languages.find(l => l.id === activeLanguageId);
-  const adSlot = process.env.NEXT_PUBLIC_ADSENSE_SLOT_MAIN ?? '';
+  const [showInitialHints, setShowInitialHints] = useState(false);
 
   useEffect(() => {
     if (authLoading) return;
@@ -36,6 +35,22 @@ export default function Home() {
     setUserId(userId);
     loadStore(userId).then(store => init(store.languages));
   }, [user, authLoading, init, setUserId]);
+
+  useEffect(() => {
+    if (authLoading) return;
+    if (!user) {
+      setShowInitialHints(true);
+      return;
+    }
+    const key = `tp_initial_hints_${user.id}`;
+    const seen = typeof window !== 'undefined' ? window.localStorage.getItem(key) : null;
+    if (!seen) {
+      setShowInitialHints(true);
+      window.localStorage.setItem(key, '1');
+    } else {
+      setShowInitialHints(false);
+    }
+  }, [user, authLoading]);
 
   if (!isLoaded || authLoading) {
     return (
@@ -154,6 +169,23 @@ export default function Home() {
               </div>
             )}
 
+            <section className="home-intro" aria-label="アプリの説明">
+              <h2 className="home-intro-title">旅行先で「見せて伝わる」自分の単語帳</h2>
+              <p className="home-intro-desc">
+                英語・韓国語・タイ語など、複数の言語を追加して自分専用のフレーズ帳を作れます。言語ごとにカテゴリ分けして、必要なときにすぐ呼び出せます。
+              </p>
+              <ul className="home-intro-list">
+                <li>言語を追加して、旅行先ごとに整理できる</li>
+                <li>フレーズをタップして拡大表示（見せる用途に最適）</li>
+                <li>AI翻訳でフレーズ作成を補助（必要なときだけ）</li>
+              </ul>
+              <div className="home-intro-actions">
+                <Link href="/guide" className="home-intro-link">
+                  使い方を見る
+                </Link>
+              </div>
+            </section>
+
             <div className="lang-hero">
               <span className="lang-hero-flag">{activeLang.flag}</span>
               <div>
@@ -165,13 +197,15 @@ export default function Home() {
               </span>
             </div>
 
-            {activeLang.categories.map(cat => (
+            {activeLang.categories.map((cat, i) => (
               <CategorySection
                 key={cat.id}
                 language={activeLang}
                 category={cat}
                 isLoggedIn={!!user}
                 onLoginRequest={() => setShowAuth(true)}
+                defaultOpen={showInitialHints && i === 0}
+                defaultExpandNotes={showInitialHints && i === 0}
               />
             ))}
 
@@ -189,29 +223,6 @@ export default function Home() {
             >
               ＋ カテゴリーを追加
             </button>
-
-            <section className="home-intro home-intro--below" aria-label="アプリの説明">
-              <h2 className="home-intro-title">旅行先で「見せて伝わる」自分の単語帳</h2>
-              <p className="home-intro-desc">
-                旅行でよく使うフレーズを、言語×カテゴリで整理。必要なときに検索して、相手に画面を見せてそのまま伝えられます。
-              </p>
-              <ul className="home-intro-list">
-                <li>フレーズをタップして拡大表示（見せる用途に最適）</li>
-                <li>AI翻訳でフレーズ作成を補助（必要なときだけ）</li>
-                <li>オフラインでも使える場合があります</li>
-              </ul>
-              <div className="home-intro-actions">
-                <Link href="/guide" className="home-intro-link">
-                  使い方を見る
-                </Link>
-              </div>
-            </section>
-
-            {adSlot && (
-              <section className="ad-section" aria-label="広告">
-                <AdBanner slot={adSlot} className="ad-banner" />
-              </section>
-            )}
           </>
         ) : (
           <div className="empty-state">
