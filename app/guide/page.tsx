@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { AdBanner } from '@/components/ads/AdBanner';
 
 export const metadata = {
   title: '使い方 | TravelPhrase — 自分で作る旅行単語帳',
@@ -7,8 +6,6 @@ export const metadata = {
 };
 
 export default function GuidePage() {
-  const adSlot = process.env.NEXT_PUBLIC_ADSENSE_SLOT_MAIN ?? '';
-
   return (
     <div className="privacy-page">
       <header className="privacy-header">
@@ -86,12 +83,6 @@ export default function GuidePage() {
             詳しくはプライバシーポリシーをご覧ください：<Link href="/privacy">/privacy</Link>
           </p>
         </section>
-
-        {adSlot && (
-          <section className="ad-section" aria-label="広告">
-            <AdBanner slot={adSlot} className="ad-banner" />
-          </section>
-        )}
       </main>
     </div>
   );

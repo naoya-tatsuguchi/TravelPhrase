@@ -172,11 +172,11 @@ export default function Home() {
             <section className="home-intro" aria-label="アプリの説明">
               <h2 className="home-intro-title">旅行先で「見せて伝わる」自分の単語帳</h2>
               <p className="home-intro-desc">
-                英語・韓国語・タイ語など、複数の言語を追加して自分専用のフレーズ帳を作れます。言語ごとにカテゴリ分けして、必要なときにすぐ呼び出せます。
+                英語・韓国語・タイ語など、複数の言語を追加して自分専用のフレーズ帳を作れます。
               </p>
               <ul className="home-intro-list">
-                <li>言語を追加して、旅行先ごとに整理できる</li>
-                <li>フレーズをタップして拡大表示（見せる用途に最適）</li>
+                <li>フレーズをタップして拡大表示（相手に見せる用途に最適）</li>
+                <li>▶ボタンでフレーズを音声再生し、発音の確認やその場で聞かせることもできます</li>
                 <li>AI翻訳でフレーズ作成を補助（必要なときだけ）</li>
               </ul>
               <div className="home-intro-actions">
@@ -239,11 +239,6 @@ export default function Home() {
               >
                 ＋ 言語を追加
               </button>
-              {!user && (
-                <button className="btn-secondary" onClick={() => setShowAuth(true)}>
-                  ログイン
-                </button>
-              )}
             </div>
           </div>
         )}

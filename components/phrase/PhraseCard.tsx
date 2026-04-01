@@ -12,11 +12,10 @@ interface Props {
   language: Language;
   isLoggedIn: boolean;
   onEdit?:  () => void;
-  onLoginRequest?: () => void;
   defaultShowNotes?: boolean;
 }
 
-export function PhraseCard({ phrase, category, language, isLoggedIn, onEdit, onLoginRequest, defaultShowNotes }: Props) {
+export function PhraseCard({ phrase, category, language, isLoggedIn, onEdit, defaultShowNotes }: Props) {
   const deletePhrase = useAppStore(s => s.deletePhrase);
   const { play, stop, playing, canPlay, playError, clearPlayError } = useVoicePlayback();
   const [showNotes, setShowNotes] = useState(!!defaultShowNotes && !!phrase.notes);
@@ -42,7 +41,7 @@ export function PhraseCard({ phrase, category, language, isLoggedIn, onEdit, onL
   };
 
   const handleDelete = () => {
-    if (!isLoggedIn && onLoginRequest) { onLoginRequest(); return; }
+    if (!isLoggedIn) return;
     if (confirm(`「${phrase.jaText}」を削除しますか？`)) {
       deletePhrase(language.id, category.id, phrase.id);
     }
@@ -167,15 +166,7 @@ export function PhraseCard({ phrase, category, language, isLoggedIn, onEdit, onL
             )}
             <button className="btn-icon btn-icon--danger" onClick={(e) => { e.stopPropagation(); handleDelete(); }} title="削除">🗑️</button>
           </>
-        ) : (
-          <button
-            className="btn-icon btn-icon--login"
-            onClick={(e) => { e.stopPropagation(); onLoginRequest?.(); }}
-            title="ログインして編集"
-          >
-            ログイン
-          </button>
-        )}
+        ) : null}
       </div>
     </div>
     {showZoom && typeof document !== 'undefined' && createPortal(

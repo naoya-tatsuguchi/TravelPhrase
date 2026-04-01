@@ -69,20 +69,10 @@ export function CategorySection({ language, category, isLoggedIn, onLoginRequest
         )}
         <span className="category-count">{category.phrases.length}フレーズ</span>
 
-        {isLoggedIn ? (
+        {isLoggedIn && (
           <div className="category-menu" onClick={e => e.stopPropagation()}>
             <button className="btn-icon" onClick={() => setEditingName(true)} title="名前を変更">✏️</button>
             <button className="btn-icon btn-icon--danger" onClick={handleDelete} title="削除">🗑️</button>
-          </div>
-        ) : (
-          <div className="category-menu" onClick={e => e.stopPropagation()}>
-            <button
-              className="btn-icon btn-icon--login"
-              onClick={onLoginRequest}
-              title="ログインして編集"
-            >
-              ログイン
-            </button>
           </div>
         )}
         <span className="category-chevron">{open ? '▲' : '▼'}</span>
@@ -100,7 +90,6 @@ export function CategorySection({ language, category, isLoggedIn, onLoginRequest
                 language={language}
                 isLoggedIn={isLoggedIn}
                 onEdit={isLoggedIn ? () => handleEditPhrase(phrase) : undefined}
-                onLoginRequest={onLoginRequest}
                 defaultShowNotes={!!defaultExpandNotes}
               />
             ))}
